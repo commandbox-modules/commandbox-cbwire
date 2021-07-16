@@ -1,0 +1,6 @@
+	/**
+	 * |action|
+	 */
+	function |action|(){
+		
+	}
