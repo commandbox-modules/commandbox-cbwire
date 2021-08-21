@@ -1,0 +1,33 @@
+
+{
+    "name":"CommandBox cbwire",
+    "version":"0.0.1",
+    "author":"Grant Copley",
+    "location":"forgeboxStorage",
+    "homepage":"https://github.com/commandbox-modules/commandbox-cbwire",
+    "documentation":"https://github.com/commandbox-modules/commandbox-cbwire",
+    "repository":{
+        "type":"git",
+        "URL":"https://github.com/commandbox-modules/commandbox-cbwire"
+    },
+    "bugs":"https://github.com/commandbox-modules/commandbox-cbwire/issues",
+    "slug":"commandbox-cbwire",
+    "shortDescription":"cbwire scaffolding for CommandBox",
+    "instructions":"https://github.com/commandbox-modules/commandbox-cbwire",
+    "type":"commandbox-modules",
+    "keywords":[
+        "cbwire",
+        "livewire"
+    ],
+    "scripts":{
+        "onRelease":"publish",
+        "postPublish":"!git push && git push --tags"
+    },
+    "private":false,
+    "license":[
+        {
+            "type":"MIT",
+            "URL":"https://github.com/commandbox-modules/commandbox-cbwire/blob/master/LICENSE"
+        }
+    ]
+}
