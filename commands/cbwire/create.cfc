@@ -2,7 +2,7 @@
  * Creates a cbwire component in an existing ColdBox application.
  *
  * Make sure you are running this command at the root of your app to find the correct folder.
- * Your new component will be created in the /wires folder by default.
+ * Components will be created in the /wires folder by default.
  *
  **/
 component {
@@ -73,6 +73,15 @@ component {
             "all"
         );
 
+        handlerContent = replaceNoCase(
+            handlerContent,
+            "|viewPath|",
+            "wires/" & lCase( arguments.name ),
+            "all"
+        );
+
+        viewContent = "<cfoutput><div>whatever</div></cfoutput>";
+
         // Handle Actions if passed
         if ( len( arguments.actions ) ){
             var allActions = "";
@@ -141,39 +150,15 @@ component {
             );
         }
 
-        var handlerPath = resolvePath( "#arguments.directory#/#arguments.name#.cfc" );
-        // Create dir if it doesn't exist
-        directoryCreate(
-            getDirectoryFromPath( handlerPath ),
-            true,
-            true
-        );
+        createResource( "#arguments.directory#/#arguments.name#.cfc", handlerContent );
 
-        // Confirm it
-        if (
-            fileExists( handlerPath ) && !confirm(
-                "The file '#getFileFromPath( handlerPath )#' already exists, overwrite it (y/n)?"
-            )
-        ){
-            print.redLine( "Exiting..." );
-            return;
+        if ( arguments.views ){
+            createResource( arguments.viewsDirectory & "/" & lCase( arguments.name ) & ".cfm", viewContent );   
         }
 
-        // Write out the files
-        file action="write" file="#handlerPath#" mode="777" output="#handlerContent#";
-        print.greenLine( "Created #handlerPath#" );
-
         if ( arguments.integrationTests ){
-            var testPath = resolvePath( "#arguments.testsDirectory#/#arguments.name#Test.cfc" );
-            // Create dir if it doesn't exist
-            directoryCreate(
-                getDirectoryFromPath( testPath ),
-                true,
-                true
-            );
-            // Create the tests
-            file action="write" file="#testPath#" mode="777" output="#wireTestContent#";
-            print.greenLine( "Created #testPath#" );
+
+            createResource( "#arguments.testsDirectory#/#arguments.name#Test.cfc", wireTestCaseContent );
             // open file
             if ( arguments.open ){
                 openPath( testPath );
@@ -184,6 +169,31 @@ component {
         if ( arguments.open ){
             openPath( handlerPath );
         }
+    }
+
+    function createResource( path, content ){
+        var resourcePath = resolvePath( arguments.path );
+
+        // Create dir if it doesn't exist
+        directoryCreate(
+            getDirectoryFromPath( resourcePath ),
+            true,
+            true
+        );
+
+        // Confirm it
+        if (
+            fileExists( resourcePath ) && !confirm(
+                "The file '#getFileFromPath( resourcePath )#' already exists, overwrite it (y/n)?"
+            )
+        ){
+            print.redLine( "Exiting..." );
+            return;
+        }
+
+        // Write out the files
+        file action="write" file="#resourcePath#" mode="777" output="#content#";
+        print.greenLine( "Created #resourcePath#" );
     }
 
 }
