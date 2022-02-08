@@ -17,7 +17,7 @@ jobs:
 
       - name: Install system module
         run: |
-          ln -s $PWD /root/commandbox-cbwire
+          ln -s $PWD /root/.CommandBox/cfml/modulescommandbox-cbwire
           ls /root/.CommandBox/cfml/modules
           ls /root/.CommandBox/cfml/modules/commandbox-cbwire
 
