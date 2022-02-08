@@ -5,7 +5,6 @@ on: [ push, pull_request ]
 defaults:
   run:
     shell: sh
-    working-directory: app
 
 jobs:
   commands:
@@ -16,7 +15,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
-      - name: Install CommandBox
+      - name: Install system module
         run: ln -s $PWD ~/.CommandBox/cfml/modules/commandbox-cbwire
 
       - name: Run cbwire create
