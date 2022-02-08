@@ -16,10 +16,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install system module
-        run: |
-          ln -s $PWD /root/.CommandBox/cfml/modules/commandbox-cbwire
-          ls /root/.CommandBox/cfml/modules
-          ls /root/.CommandBox/cfml/modules/commandbox-cbwire
+        run: ln -s $PWD /root/.CommandBox/cfml/modules
 
       - name: Run cbwire create
         run: box cbwire create name=User
