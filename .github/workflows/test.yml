@@ -17,11 +17,10 @@ jobs:
 
       - name: Install system module
         run: |
-          echo $PWD
-          cd ~/
-          ls
-          cd -
           ls ./
+          ls /github/home/.CommandBox/
+          ls /github/home/.CommandBox/cfml/
+          ls /github/home/.CommandBox/cfml/modules
           ln -s $PWD ~/.CommandBox/cfml/modules/commandbox-cbwire
 
       - name: Run cbwire create
