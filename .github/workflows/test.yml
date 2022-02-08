@@ -1,0 +1,31 @@
+name: Test
+
+on: [ push, pull_request ]
+
+defaults:
+  run:
+    shell: sh
+
+jobs:
+  commands:
+    name : Run command tests
+    runs-on: ubuntu-latest
+    container: ghcr.io/foundeo/cfml-ci-tools/cfml-ci-tools:1.0.6
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Install system module
+        run: ln -s $PWD /root/.CommandBox/cfml/modules
+
+      - name: Run cbwire create
+        run: box cbwire create name=User
+      
+      - name: Confirm component exists
+        run: test -f $PWD/wires/User.cfc && echo "component exists" || exit 1
+      
+      - name: Confirm view exists
+        run: test -f $PWD/views/wires/user.cfm && echo "wire exists" || exit 1
+      
+      - name: Confirm test spec exists
+        run: test -f $PWD/tests/specs/integration/wires/UserTest.cfc && echo "test exists" || exit 1
